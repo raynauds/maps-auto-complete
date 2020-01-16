@@ -1,44 +1,48 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Description
 
-## Available Scripts
+Example of Google Maps autocomplete and display of address in a map.
+Inspired by Ben Awad [react-geosuggest](https://youtu.be/-QQnzDVcTCo) & [react-google-maps](https://youtu.be/xLlIgokKiLc)
+To run this project, rename `index.sample.html` in `/public` folder to `index.html` and replace `YOUR_API_KEY` in this file by your Google Maps API key ([Get a Google Maps API key here](https://cloud.google.com/maps-platform))
 
-In the project directory, you can run:
+## Implementation
 
-### `yarn start`
+Initialize a React project with typescript and go to the app folder.
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+```
+npx create-react-app my-app --template typescript
+```
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+Install [react-geosuggest](https://github.com/ubilabs/react-geosuggest) and [react-google-maps](https://github.com/tomchentw/react-google-maps)
 
-### `yarn test`
+```
+npm i react-google-maps
+npm i react-geosuggest
+```
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Add Google Maps script in `/public/index.html`. This is required for `react-geosuggest`.
+As a result, `withScriptjs` of `react-google-maps` is not used.
 
-### `yarn build`
+```html
+<!-- Google Maps -->
+<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places"></script>
+```
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+[Google Maps Geocoding API](https://developers.google.com/maps/documentation/geocoding/start), [Google Places API Web Service](https://developers.google.com/places/web-service/intro) and [Google Maps Javascript API](https://developers.google.com/maps/documentation/javascript/tutorial) must be enabled for your API key. If they are not enabled, go to the [Google Maps console](https://console.cloud.google.com/google/maps-apis/overview), find them using the search field at the top and enable them.
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+Geosuggest HTML structure
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+```html
+<div class="geosuggest">
+  <div class="geosuggest__suggests-wrapper">
+    <input class="geosuggest__input" />
+  </div>
+  <div class="geosuggest__suggests-wrapper">
+    <!-- if not focused: <ul class="geosuggest__suggests geosuggest__suggests--hidden">  -->
+    <ul class="geosuggest__suggests">
+      <li class="geosuggest__item">
+        <span> <b class="geosuggest__item__matched-text">Ne</b>w York </span>
+      </li>
+    </ul>
+  </div>
+</div>
+```
